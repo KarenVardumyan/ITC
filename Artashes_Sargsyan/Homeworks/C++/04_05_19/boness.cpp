@@ -26,19 +26,7 @@ void printAll(char** arr1,char** arr2){
 }
 
 void bones(char** arr,int p1,int p2,int p3){
-    char a = '*';
-    for(int i = 0,j = 0; i < 3; ++i){
-        arr[i][j] = '|';
-    }
-    for(int i = 0,j = 4; i < 3; ++i){
-        arr[i][j] = '|';
-    }
-    for(int i = 0,j = 8; i < 3; ++i){
-        arr[i][j] = '|';
-    }
-    for(int i = 0,j = 12; i < 3; ++i){
-        arr[i][j] = '|';
-    }                       
+    char a = '*';             
     switch(p1){
         case 1:
             arr[1][2] = a;
@@ -165,21 +153,25 @@ int main(){
     for(int i = 0; i < 3; ++i){
         arr1[i] = new char[13];
     }
-    for(int i = 0; i < 3; ++i){
-        for(int j = 0; j < 13; ++j){
-            arr1[i][j] = space;
-        }
-    }
-    
+
     char** arr2 = new char*[3];
     for(int i = 0; i < 3; ++i){
         arr2[i] = new char[13];
     }
+
     for(int i = 0; i < 3; ++i){
         for(int j = 0; j < 13; ++j){
-            arr2[i][j] = space;
+            arr1[i][j] = space;
+	    arr2[i][j] = space;
         }
     }
+    
+    for(int i = 0; i < 3; ++i){
+        for(int j = 0; j < 13; j += 4){
+	    arr1[i][j] = '|';
+	    arr2[i][j] = '|';
+        }
+}
 
     bones(arr1,player1,player2,player3);
     bones(arr2,comp1,comp2,comp3);
