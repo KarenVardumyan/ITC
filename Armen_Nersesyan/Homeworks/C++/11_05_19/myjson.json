@@ -1,0 +1,18 @@
+[
+    {
+        "name": "Armen",
+        "age": 24,
+        "job": "deweloper"
+    },
+    {
+        "name": "Arto",
+        "age": 27,
+        "job": "deweloper"
+    },
+    {
+        "name": "Vahe",
+        "age": 27,
+        "job": "deweloper"
+    }
+]
+
