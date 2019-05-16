@@ -49,19 +49,57 @@ class Myjson
 	}
 };
 void jsonobject_classobject(std::string* objectarr){
-     for(int i = 0; i < 3;++i){
-		for(int j = 0; j < objectarr[i].length();++j){
-
-		}
+	Myjson obj;
+	std::string key = "";
+    std::string value = "";
+    for(int i = 0; i < 3;++i){
+			int j = 0;
+			while(objectarr[i][j] != ':'){
+				key = key + objectarr[j];
+				++j;
+				if()
+			}
+			++j;
+			while(objectarr[i][j] != ',' || objectarr[i][j] != '\0' && j < objectarr[i].length()){
+                value = value + objectarr[j];
+				++j;
+            }
+			if(key == "name"){
+				obj.set_name(value);
+				obj.print();
+			}else if(key == "age"){
+			//	obj.string_cast_int(value);
+			}else if(key == "job"){
+				obj.set_job(value);
+			}
+			key = "";
+			value = "";
     }
+	
 }
-
+void delete_kavichka(std::string& object){
+	std::string newobject = "";
+	for(int i = 0; i < object.length();++i){
+		if(object[i] != '"'){
+			newobject = newobject + object[i];
+		}
+	}
+	object = newobject;
+}
+int string_cast_int (std::string text) {
+    int tiv = text[0] - '0';
+    for(int i = 1; i < text.length(); ++i ) {
+        tiv	= (tiv * 10) + (text[i] - '0');
+    }
+    return tiv;
+}
 std::string json_object(std::string json){
 	std::string objectjson = "";
 	for(int i = 0; i < json.length();++i){
 		if(json[i] == '{'){
 			for(int j = i + 1; j < json.length();++j){
 				if(json[j] == '}'){
+
 					return objectjson;
 				}else{
 					objectjson = objectjson + json[j];
@@ -97,10 +135,9 @@ int main(){
 		objectarr[i] = json_object(json);
 		delete_object(json);
 	}
-	//for(int i = 0; i < 3;++i){
-      //  std::cout<<objectarr[i]<<std::endl;
-    //}
-	Myjson object[3];
+	for(int i = 0; i < 3;++i){
+        delete_kavichka(objectarr[i]);
+    }
 	jsonobject_classobject(objectarr);
 
 	return 0;
