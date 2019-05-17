@@ -48,32 +48,47 @@ class Myjson
 		std::cout<<"job "<<this-> itsjob<<std::endl;
 	}
 };
-void jsonobject_classobject(std::string* objectarr){
+std::string jsonobject_classobject(std::string objectarr){
+	for(int f = 0; f < objectarr.length();++f){
+		std::cout<<objectarr[f];
+	}
 	Myjson obj;
-	std::string key = "";
-    std::string value = "";
-    for(int i = 0; i < 3;++i){
-			int j = 0;
-			while(objectarr[i][j] != ':'){
-				key = key + objectarr[j];
-				++j;
-				if()
+	std::string tox[3] = {"","",""};
+	int index = 0;
+	for(int i = 0;i < 3;++i){
+		for(int j = index;j < objectarr.length();++j){
+			if(objectarr[j] != ','){
+				tox[i] = tox[i] + objectarr[j];
+			}else{
+				index = j + 1; 
+				break;
 			}
-			++j;
-			while(objectarr[i][j] != ',' || objectarr[i][j] != '\0' && j < objectarr[i].length()){
-                value = value + objectarr[j];
-				++j;
-            }
-			if(key == "name"){
-				obj.set_name(value);
-				obj.print();
-			}else if(key == "age"){
-			//	obj.string_cast_int(value);
-			}else if(key == "job"){
-				obj.set_job(value);
-			}
-			key = "";
-			value = "";
+		}
+		for(int k = 0; k < tox[i].length();++k){
+			std::cout<<tox[i][k];
+		}
+		int tox_index = 1;
+		std::string key = "";
+        std::string value = "";
+        while(tox[i][tox_index] != ':'){
+			key = key + tox[i][tox_index];
+			++ tox_index;
+        }
+		++tox_index;
+		while(tox_index < tox[i].length()){
+			value = value + tox[i][tox_index];
+		}
+		//std::cout<<key;
+		//std::cout<<value;
+		if(key == "name"){
+			obj.set_name(value);
+			
+		}else if(key == "age"){
+			//string_cast_int(value);
+		}else if(key == "job"){
+			obj.set_job(value);
+		}
+
     }
 	
 }
@@ -93,6 +108,7 @@ int string_cast_int (std::string text) {
     }
     return tiv;
 }
+
 std::string json_object(std::string json){
 	std::string objectjson = "";
 	for(int i = 0; i < json.length();++i){
@@ -138,7 +154,10 @@ int main(){
 	for(int i = 0; i < 3;++i){
         delete_kavichka(objectarr[i]);
     }
-	jsonobject_classobject(objectarr);
+	for(int i = 0;i < 3; ++i){
+		jsonobject_classobject(objectarr[i]);
+	}
+	
 
-	return 0;
+
 }
