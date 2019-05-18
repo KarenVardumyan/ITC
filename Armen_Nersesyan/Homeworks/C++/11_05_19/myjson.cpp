@@ -6,10 +6,12 @@ class Myjson {
 	int itsage;
 	std::string itsname;
 	std::string itsjob;
+	
 	public:
+
 	~Myjson(){};
 
-	 std::string get_name (void) const {
+	std::string get_name (void) const {
         return this -> itsname;
     }
 
@@ -32,20 +34,20 @@ class Myjson {
 		this -> itsjob = job;
 	}
 	Myjson(void){
-		this-> itsname = "Name";
-		this-> itsage = 195;
-		this-> itsjob = "Job";
+		this -> itsname = "Name";
+		this -> itsage = 195;
+		this -> itsjob = "Job";
 	}
 	Myjson(std::string name,int age,std::string job){
-		this-> itsname = name;
-		this-> itsage = age;
-		this-> itsjob = job;
+		this -> itsname = name;
+		this -> itsage = age;
+		this -> itsjob = job;
 	}
 	void print(void) const {
 		std::cout<<"--------------------------------------------" <<std::endl;
-		std::cout<<"name - "<< this-> itsname <<std::endl;
-		std::cout<<"age - "<< this-> itsage <<std::endl;
-		std::cout<<"job - "<< this-> itsjob <<std::endl;
+		std::cout<<"name - "<< this -> itsname <<std::endl;
+		std::cout<<"age - "<< this -> itsage <<std::endl;
+		std::cout<<"job - "<< this -> itsjob <<std::endl;
 	}
 };
 
