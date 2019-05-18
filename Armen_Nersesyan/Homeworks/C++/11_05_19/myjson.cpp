@@ -2,8 +2,7 @@
 #include<fstream>
 #include<streambuf>
 
-class Myjson
-{
+class Myjson {
 	int itsage;
 	std::string itsname;
 	std::string itsjob;
@@ -18,7 +17,7 @@ class Myjson
         this -> itsname = name;
     }
     
-    int get_age (int age) const {
+    int get_age (void) {
         return this -> itsage;
     }
 
@@ -26,7 +25,7 @@ class Myjson
         this -> itsage = age;
     }
 
-    std::string get_job (std::string job) const{
+    std::string get_job (void) {
         return this -> itsjob;
     }
 	void set_job(std::string job){
@@ -43,59 +42,56 @@ class Myjson
 		this-> itsjob = job;
 	}
 	void print(void) const {
-		std::cout<<"name "<<this-> itsname<<std::endl;
-		std::cout<<"age "<<this-> itsage<<std::endl;
-		std::cout<<"job "<<this-> itsjob<<std::endl;
+		std::cout<<"--------------------------------------------" <<std::endl;
+		std::cout<<"name - "<< this-> itsname <<std::endl;
+		std::cout<<"age - "<< this-> itsage <<std::endl;
+		std::cout<<"job - "<< this-> itsjob <<std::endl;
 	}
 };
-std::string jsonobject_classobject(std::string objectarr){
-	for(int f = 0; f < objectarr.length();++f){
-		std::cout<<objectarr[f];
-	}
-	Myjson obj;
+
+void delete_kavichka(std::string& object);
+std::string jsonobject_classobject(Myjson obj, std::string objectarr);
+int string_cast_int (std::string text);
+std::string json_object(std::string json);
+void delete_object(std::string& json);
+
+std::string jsonobject_classobject(Myjson* obj, std::string objectarr){
 	std::string tox[3] = {"","",""};
 	int index = 0;
 	for(int i = 0;i < 3;++i){
 		for(int j = index;j < objectarr.length();++j){
 			if(objectarr[j] != ','){
 				tox[i] = tox[i] + objectarr[j];
-			}else{
+			} else {
 				index = j + 1; 
 				break;
 			}
 		}
-		for(int k = 0; k < tox[i].length();++k){
-			std::cout<<tox[i][k];
-		}
-		int tox_index = 1;
 		std::string key = "";
         std::string value = "";
+		int tox_index = 0;
         while(tox[i][tox_index] != ':'){
 			key = key + tox[i][tox_index];
-			++ tox_index;
+			++tox_index;
         }
 		++tox_index;
-		while(tox_index < tox[i].length()){
+		while(tox_index < tox[i].length() ){
 			value = value + tox[i][tox_index];
+			++tox_index;
 		}
-		//std::cout<<key;
-		//std::cout<<value;
 		if(key == "name"){
-			obj.set_name(value);
-			
+			obj -> set_name(value);	
 		}else if(key == "age"){
-			//string_cast_int(value);
+			obj -> set_age( string_cast_int(value) );
 		}else if(key == "job"){
-			obj.set_job(value);
+			obj -> set_job(value);
 		}
-
     }
-	
 }
 void delete_kavichka(std::string& object){
 	std::string newobject = "";
 	for(int i = 0; i < object.length();++i){
-		if(object[i] != '"'){
+		if(object[i] != '"' && object[i] != ' ' && object[i] != '\n'){
 			newobject = newobject + object[i];
 		}
 	}
@@ -137,15 +133,13 @@ void delete_object(std::string& json){
 	}
 }
 
-
-
 int main(){
 	std::ifstream t("myjson.json");
     std::string json((std::istreambuf_iterator<char>(t)),
     std::istreambuf_iterator<char>());
-	for(int i = 0; i < json.length();++i){
-		std::cout<<json[i];
-	}
+	
+	Myjson jsonarray[3];
+	
 	std::string objectarr[3];
 	for(int i = 0; i < 3;++i){
 		objectarr[i] = json_object(json);
@@ -153,11 +147,9 @@ int main(){
 	}
 	for(int i = 0; i < 3;++i){
         delete_kavichka(objectarr[i]);
+		jsonobject_classobject(&jsonarray[i],objectarr[i]);
     }
 	for(int i = 0;i < 3; ++i){
-		jsonobject_classobject(objectarr[i]);
+		jsonarray[i].print();
 	}
-	
-
-
 }
