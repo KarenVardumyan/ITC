@@ -26,20 +26,16 @@ public:
     void push_back(int a)
     {
         int* new_vec;
-        new_vec = new int[size];
+        new_vec = new int[size + 1];
         for(int i = 0; i < size; i++)
         {
             new_vec[i] = vec[i];
         }
         size++;
         delete vec;
-        vec = new int[size];
-        for(int i = 0; i < size; i++)
-        {
-            vec[i] = new_vec[i];
-        }
-        delete new_vec;
-        vec[size - 1] = a;
+        vec = new_vec;
+		new_vec = NULL;
+		vec[size - 1] = a;
     }
     
     void psuh_front(int a)
