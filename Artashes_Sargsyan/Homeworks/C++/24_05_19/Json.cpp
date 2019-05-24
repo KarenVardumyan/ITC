@@ -53,7 +53,7 @@ void CreateObjectsByJson(std::string str,Person* person,int iter,int i,int j,int
     if(x == 12){
         return;
     }
-    std::string Key;
+    std::string Key = "";
     std::string Value = "";
     for(i; ;++i){
         if(str[i] == ':') break;
@@ -66,24 +66,13 @@ void CreateObjectsByJson(std::string str,Person* person,int iter,int i,int j,int
     switch(Key[0]){
     	case 'n':
             person[iter].SetName(Value);
-            Value = "";
-            Key = "";
             break;
         case 'a':
             person[iter].SetAge(std::stoi(Value));
-            Value = "";
-            Key = "";
             break;
         case 'j':
             person[iter].SetJob(Value);
-            Value = "";
-            Key = "";
             iter++;
-            break;
-        default:
-            Value = "";
-            Key = "";
-            std::cout << "compilation error...\n";
             break;
     }
     i = j + 1;
