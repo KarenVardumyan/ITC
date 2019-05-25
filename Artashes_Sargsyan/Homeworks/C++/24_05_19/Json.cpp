@@ -48,7 +48,6 @@ void InvalidCharDelete(std::string& str){
 	str = CleanStr;
 }
 
-
 void CreateObjectsByJson(std::string str,Person* person,int iter,int i,int j,int x){
     if(x == 12){
         return;
@@ -75,9 +74,7 @@ void CreateObjectsByJson(std::string str,Person* person,int iter,int i,int j,int
             iter++;
             break;
     }
-    i = j + 1;
-    x++;
-    CreateObjectsByJson(str,person,iter,i,j,x);
+    CreateObjectsByJson(str,person,iter,j + 1,j,x + 1);
 }
 
 int main(){
