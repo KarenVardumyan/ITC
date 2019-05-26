@@ -1,3 +1,4 @@
+
 #include <iostream>
 #include <string>
 #include <fstream>
@@ -41,15 +42,15 @@ void InvalidCharDelete(std::string& str){
     
 	std::string CleanStr = "";
 	for(int i = 0; i < str.length();++i){
-		if(str[i] != '"' && str[i] != ' ' && str[i] != '\n' && str[i] != '{' && str[i] != '[' && str[i] != '}'){
+		if(str[i] != '"' && str[i] != ' ' && str[i] != '\n' && str[i] != '{' && str[i] != '[' && str[i] != '}' && str[i] != '\t'){
 		CleanStr += str[i];
 		}
 	}
 	str = CleanStr;
 }
 
-void CreateObjectsByJson(std::string str,Person* person,int iter,int i,int j,int x){
-    if(x == 12){
+void CreateObjectsByJson(std::string str,Person* person,int iter,int i,int j,int x,int SIZE){
+    if(x == SIZE * 3){
         return;
     }
     std::string Key = "";
@@ -74,23 +75,29 @@ void CreateObjectsByJson(std::string str,Person* person,int iter,int i,int j,int
             iter++;
             break;
     }
-    CreateObjectsByJson(str,person,iter,j + 1,j,x + 1);
+    CreateObjectsByJson(str,person,iter,j + 1,j,x + 1,SIZE);
 }
 
 int main(){
-
+    int SIZE = 0;
     std::ifstream t("text.json");
     std::string str((std::istreambuf_iterator<char>(t)),
     std::istreambuf_iterator<char>());
     
-    Person person[4];
+    for(int i = 0; i < str.length(); ++i){
+        if(str[i] == '}'){
+            SIZE++;
+        }
+    }
+    Person* person = new Person[SIZE];
 
     InvalidCharDelete(str);
-    CreateObjectsByJson(str,person,0,0,0,0);
+    CreateObjectsByJson(str,person,0,0,0,0,SIZE);
 
-    for(int i = 0; i < 4; ++i){
+    for(int i = 0; i < SIZE; ++i){
         std::cout <<"_______________Person  #" << i << "______________\n\n";
 		person[i].print();
 	}
+	delete [] person;
 return 0;
 }
