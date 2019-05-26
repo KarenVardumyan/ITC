@@ -19,7 +19,7 @@ void NewJsonFileCreate(void){
         str += "\t{\n\t\t\"name\":\"" + name + "\",\n";
         std::cout << "age of person # " << i << "\n";
         std::cin >> age;
-        str += "\t\t\"\age\":\"" + age + "\",\n";
+        str += "\t\t\"age\":\"" + age + "\",\n";
         std::cout << "job of person # " << i << "\n";
         std::cin >> job;
         str += "\t\t\"job\":\"" + job + "\"\n\t},\n";
