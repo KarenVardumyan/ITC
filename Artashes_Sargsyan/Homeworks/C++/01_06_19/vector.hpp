@@ -1,26 +1,81 @@
-class Vector {
+class Vector{
+    
     int* array;
     int size;
     int capacity;
 	    
     public:
-    Vector() {
+    Vector(){
     	array = new int[0];
    		size = 0;
    		capacity = 0;
     }
-    Vector(int size) {    
+    
+    Vector(int size){    
         this -> capacity = size;
+        this -> size = size;
     	array = new int[capacity];
-    	this -> size = size;
-
     }
-    ~Vector() {
+    
+    Vector(int size,int value){
+        this -> capacity = size;
+        this -> size = size;
+        array = new int[capacity];
+        for(int i = 0; i < size; ++i){
+            array[i] = value;
+        }
+    }
+    
+    ~Vector(){
         delete [] array;
         array = NULL;
     }
-
-    void sort(int UpOrDown){
+    
+    void shrink_to_fit(){
+        int* newarray = new int[size];
+        for(int i = 0; i < size; ++i){
+            newarray[i] = array[i];
+        }
+        delete [] array;
+        array = newarray;
+        newarray = NULL;
+        capacity = size;
+    }
+    
+    void swap(int index1,int index2){
+        int tmp = array[index1];
+        array[index1] = array[index2];
+        array[index2] = tmp;
+        tmp = 0;
+    }
+    
+    void swap(Vector &vector,int index1,int index2){
+        int tmp = vector.array[index2];
+        vector.array[index2] = array[index1];
+        array[index1] = tmp;
+        tmp = 0;
+    }
+    
+    void swap(Vector &vector){
+        int tmpSize = size;
+        int tmpCapacity = capacity;
+        int* tmp = new int[size];
+        for(int i = 0; i < size; ++i){
+            tmp[i] = array[i];
+        }
+        delete [] array;
+        array = vector.array;
+        size = vector.size;
+        capacity = vector.capacity;
+        vector.array = tmp;
+        vector.size = tmpSize;
+        vector.capacity = tmpCapacity;
+        tmp = NULL;
+        tmpSize = 0;
+        tmpCapacity = 0;
+    }
+    
+    void sort(int UpOrDown) const{
         if(size <= 0){
             std::cout << "The vector is empty...!sort(ERROR)...\n";
             return;
@@ -137,7 +192,7 @@ class Vector {
         newarray = NULL;
     }
     
-    int get_max(){
+    int get_max() const{
         int max = array[0];
         for(int i = 0; i < size; ++i){
             if(array[i] > max){
@@ -147,7 +202,7 @@ class Vector {
         return max;
     }
     
-    int get_min(){
+    int get_min() const{
         int min = array[0];
         for(int i = 0; i < size; ++i){
             if(array[i] < min){
@@ -157,7 +212,7 @@ class Vector {
         return min;
     }
     
-    int get_at_index(int index){
+    int get_at_index(int index) const{
         if(index < 0 || index > size){
             std::cout << "Out of vector size...!get_at_index(ERROR)...\n";
             return 0;
@@ -195,11 +250,11 @@ class Vector {
         array[index] = value;
     }
     
-	int get_size() {
+	int get_size() const{
 		return this -> size;
 	}
 	
-	int get_capacity(){
+	int get_capacity() const{
         return this -> capacity;
     }
     
@@ -211,9 +266,10 @@ class Vector {
    		capacity = 0;
     }
     
-	void print() {
+	void print() const{
 		for(int i = 0; i < size; ++i) {
 			std::cout << "vector[" << i << "] = " << array[i] << std::endl;
 		}
+		std::cout << std::endl;
 	}
 };
