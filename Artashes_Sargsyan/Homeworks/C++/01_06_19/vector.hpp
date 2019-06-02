@@ -1,3 +1,5 @@
+#include <iostream>
+
 class Vector{
     
     int* array;
@@ -32,6 +34,10 @@ class Vector{
     }
     
     void shrink_to_fit(){
+        if(size <= 0){
+            std::cout << "The vector is empty...!shrink_to_fit(ERROR)...\n";
+            return;
+        }
         int* newarray = new int[size];
         for(int i = 0; i < size; ++i){
             newarray[i] = array[i];
@@ -43,6 +49,10 @@ class Vector{
     }
     
     void swap(int index1,int index2){
+        if((index1 < 0 || index1 > size) || (index2 < 0 || index2 > size)){
+            std::cout << "Out of vector size...!swap(ERROR)...#1\n";
+            return;
+        }
         int tmp = array[index1];
         array[index1] = array[index2];
         array[index2] = tmp;
@@ -50,6 +60,10 @@ class Vector{
     }
     
     void swap(Vector &vector,int index1,int index2){
+        if((index1 < 0 || index1 > vector.size) || (index2 < 0 || index2 > size)){
+            std::cout << "Out of vector size...!swap(ERROR)...#2\n";
+            return;
+        }
         int tmp = vector.array[index2];
         vector.array[index2] = array[index1];
         array[index1] = tmp;
@@ -227,10 +241,7 @@ class Vector{
         }
         size++;
         int* newarray = new int[capacity];
-        for(int i = 0; ; ++i){
-            if(i == index){
-                break;
-            }
+        for(int i = 0; i <= index; ++i){
             newarray[i] = array[i];
         }
         newarray[index] = value;
@@ -259,6 +270,10 @@ class Vector{
     }
     
     void clear(){
+        if(size <= 0){
+            std::cout << "The vector is empty...!clear(ERROR)...\n";
+            return;
+        }
         delete [] array;
         array = NULL;
     	array = new int[0];
@@ -267,6 +282,10 @@ class Vector{
     }
     
 	void print() const{
+	    if(size <= 0){
+            std::cout << "The vector is empty...!\n";
+            return;
+        }
 		for(int i = 0; i < size; ++i) {
 			std::cout << "vector[" << i << "] = " << array[i] << std::endl;
 		}
