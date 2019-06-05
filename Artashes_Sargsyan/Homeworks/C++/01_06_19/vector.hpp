@@ -1,14 +1,15 @@
 #include <iostream>
 
+template<typename T>
 class Vector{
     
-    int* array;
+    T* array;
     int size;
     int capacity;
 	    
     public:
     Vector(){
-    	array = new int[0];
+    	array = new T[0];
    		size = 0;
    		capacity = 0;
     }
@@ -19,10 +20,10 @@ class Vector{
     	array = new int[capacity];
     }
     
-    Vector(int size,int value){
+    Vector(int size,T value){
         this -> capacity = size;
         this -> size = size;
-        array = new int[capacity];
+        array = new T[capacity];
         for(int i = 0; i < size; ++i){
             array[i] = value;
         }
@@ -38,7 +39,7 @@ class Vector{
             std::cout << "The vector is empty...!shrink_to_fit(ERROR)...\n";
             return;
         }
-        int* newarray = new int[size];
+        T* newarray = new T[size];
         for(int i = 0; i < size; ++i){
             newarray[i] = array[i];
         }
@@ -53,7 +54,7 @@ class Vector{
             std::cout << "Out of vector size...!swap(ERROR)...#1\n";
             return;
         }
-        int tmp = array[index1];
+        T tmp = array[index1];
         array[index1] = array[index2];
         array[index2] = tmp;
         tmp = 0;
@@ -64,7 +65,7 @@ class Vector{
             std::cout << "Out of vector size...!swap(ERROR)...#2\n";
             return;
         }
-        int tmp = vector.array[index2];
+        T tmp = vector.array[index2];
         vector.array[index2] = array[index1];
         array[index1] = tmp;
         tmp = 0;
@@ -73,7 +74,7 @@ class Vector{
     void swap(Vector &vector){
         int tmpSize = size;
         int tmpCapacity = capacity;
-        int* tmp = new int[size];
+        T* tmp = new T[size];
         for(int i = 0; i < size; ++i){
             tmp[i] = array[i];
         }
@@ -121,7 +122,7 @@ class Vector{
     }
 
 
-    void push_back(int value){
+    void push_back(T value){
         size++;
         if(size == 1){
             capacity = 2;
@@ -129,7 +130,7 @@ class Vector{
         } 
         else if(size != 1 && size > capacity){
             capacity = capacity * 2;
-            int* newarray = new int[capacity];
+            T* newarray = new T[capacity];
             newarray[size - 1] = value;
             for(int i = 0; i <= size - 2; ++i){
                 newarray[i] = array[i];
@@ -142,7 +143,7 @@ class Vector{
             }
     }
     
-    void push_front(int value){
+    void push_front(T value){
         size++;
         if(size == 1){
             capacity = 2;
@@ -152,7 +153,7 @@ class Vector{
             if(size > capacity){
                 capacity = capacity * 2;
             }
-            int* newarray = new int[capacity];
+            T* newarray = new T[capacity];
             newarray[0] = value;
             for(int i = 1; i <= size - 1; ++i){
                 newarray[i] = array[i - 1];
@@ -176,7 +177,7 @@ class Vector{
             std::cout << "The vector is empty...!pop_front(ERROR)...\n";
             return;
         }
-        int* newarray = new int[size--];
+        T* newarray = new T[size--];
         for(int i = 0; i < size; ++i){
             newarray[i] = array[i + 1];
         }
@@ -191,7 +192,7 @@ class Vector{
             return;
         }
         size--;
-        int* newarray = new int[capacity];
+        T* newarray = new T[capacity];
         for(int i = 0; ; ++i){
             if(i == index){
                 break;
@@ -206,8 +207,8 @@ class Vector{
         newarray = NULL;
     }
     
-    int get_max() const{
-        int max = array[0];
+    T get_max() const{
+        T max = array[0];
         for(int i = 0; i < size; ++i){
             if(array[i] > max){
                 max = array[i];
@@ -216,8 +217,8 @@ class Vector{
         return max;
     }
     
-    int get_min() const{
-        int min = array[0];
+    T get_min() const{
+        T min = array[0];
         for(int i = 0; i < size; ++i){
             if(array[i] < min){
                 min = array[i];
@@ -226,7 +227,7 @@ class Vector{
         return min;
     }
     
-    int get_at_index(int index) const{
+    T get_at_index(int index) const{
         if(index < 0 || index > size){
             std::cout << "Out of vector size...!get_at_index(ERROR)...\n";
             return 0;
@@ -234,13 +235,13 @@ class Vector{
         return array[index];
     }
     
-    void insert_at_index(int index,int value){
+    void insert_at_index(int index,T value){
         if(index < 0 || index > size){
             std::cout << "Out of vector size...!insert_at_index(ERROR)...\n";
             return;
         }
         size++;
-        int* newarray = new int[capacity];
+        T* newarray = new T[capacity];
         for(int i = 0; i <= index; ++i){
             newarray[i] = array[i];
         }
@@ -253,7 +254,7 @@ class Vector{
         newarray = NULL;
     }
     
-    void set_at_index(int index,int value) {
+    void set_at_index(int index,T value) {
         if(index < 0 || index > size){
             std::cout << "Out of vector size...!set_at_index(ERROR)...\n";
             return;
@@ -276,7 +277,7 @@ class Vector{
         }
         delete [] array;
         array = NULL;
-    	array = new int[0];
+    	array = new T[0];
    		size = 0;
    		capacity = 0;
     }
