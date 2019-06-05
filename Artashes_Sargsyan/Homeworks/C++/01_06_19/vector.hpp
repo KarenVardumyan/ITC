@@ -17,7 +17,7 @@ class Vector{
     Vector(int size){    
         this -> capacity = size;
         this -> size = size;
-    	array = new int[capacity];
+    	array = new T[capacity];
     }
     
     Vector(int size,T value){
