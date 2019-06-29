@@ -78,16 +78,15 @@ class List
 			}
 			return temp -> value;
 		}
-
 	}
-	void insert_at_index(int index,T value){
+	void insert_at_index(unsigned int index,T value){
 		if(index < 0){
 			std::cout<<"listum chka bacasakan index > 0"<<std::endl;
             return;
-		}else if(index > size && index != 0){
+		} else if(index > size && index != 0){
 			std::cout<<"indexy petq e poqr lini size ic"<<std::endl;
             return;
-		}else if(index == size && index != 0){
+		} else if(index == size && index != 0){
 			push_back(value);
 			return;
 		}
@@ -97,10 +96,10 @@ class List
 			this -> head = newNode;
 			this -> tail = newNode;
 			newNode -> next = nullptr;
-		}else if(index == 0 && size > 0){
+		} else if(index == 0 && size > 0){
 			this -> head = newNode;
 			newNode -> next = nullptr;
-		}else{
+		} else {
 			Node* temp = this -> head;
 			for(int i = 0; i < index - 1; ++i){
 				temp = temp -> next;
@@ -109,10 +108,9 @@ class List
 	        temp -> next = newNode;
 			this -> tail = newNode;
 		}
-
 		++size;
 	}
-	void remove_at_index (int index) {
+	void remove_at_index (unsigned int index) {
         if (index < 0) {
             std::cout<< "indexy bacasakan linel chi karox" <<std::endl;
             return;
@@ -129,17 +127,17 @@ class List
 			this -> head = nullptr;
 			this -> tail = nullptr;
 			delete temp;
-		}else if(size == 2 && index == 0){
+		} else if(size == 2 && index == 0){
 			this -> head = this -> tail;
 			delete temp;
-		}else if(size == 2 && index == 1){
+		} else if(size == 2 && index == 1){
 			temp = temp -> next;
 			this -> tail = this -> head;
 			delete temp;
-		}else if(index == 0){
+		} else if(index == 0){
 			head = temp -> next;
 			delete temp;
-		}else{
+		} else{
 			for(int i = 0; i < index - 1;++i){
 				temp = temp -> next;
 			}
@@ -250,16 +248,15 @@ class List
 		--size;
 	}
 
-	Node* reverse()
-	{
+	Node* reverse() {
 		Node* newTail = this -> head;
-    	Node* phead = this -> head;
-    	while(head != nullptr){
-        	Node* p = head->next;
+		Node* phead = this -> head;
+		while(head != nullptr) {
+			Node* p = head->next;
 			head-> next = phead;
 			phead = head;
 			head = p;
-   		}
+		}
 		this -> head = phead;
 		this -> tail = newTail;
 	}
@@ -272,14 +269,15 @@ class List
 };
 
 int main(){
-	List <int> list1;
-	
+	List <int> list;
+	list.push_back(10);	
 	for(int i = 0; i < 10;++i){
-		list1.push_back(i);
+		list.push_back(i);
 	}
-	list1.print();
-	list1.reverse();
-	list1.print();
+	
+	list.print();
+	list.reverse();
+	list.print();
 	
 	return 0;
 }
