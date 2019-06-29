@@ -1,16 +1,17 @@
 #include <iostream>
 
+template<typename T>
 class List {
-    
+    template<typename Z>
     struct Node {
-        Node* next;
-        int value;
-        Node(int v,Node* node = nullptr):value(v),next(node) { }
+        Node* next; 
+        Z value;
+        Node(Z value = Z(),Node* node = nullptr):value(value),next(node) { }
     };
     
     int size;
-    Node* head;
-    Node* tail;
+    Node<T>* head;
+    Node<T>* tail;
     
     public:
     
@@ -20,7 +21,7 @@ class List {
         this -> tail = nullptr;
     }
 
-    List(int size,int value = 0) {
+    List(int size,T value) {
         this -> size = 0;
         this -> head = nullptr;
         this -> tail = nullptr;
@@ -28,7 +29,19 @@ class List {
             push_back(value);
         }
     }
-
+    
+    List(List& copy) {
+        Node<T>* tmpcopy = copy.head;
+        this -> size = 0;
+        this -> head = nullptr;
+        this -> tail = nullptr;
+        for(int i = 0; i < copy.get_size(); ++i) {
+            push_back(tmpcopy -> value);
+            tmpcopy = tmpcopy -> next;
+        }
+        
+    }
+    
     ~List() { clear(); }
     
     int get_size() const { return size; }  
@@ -39,8 +52,78 @@ class List {
         }
     }
     
-    int& operator[](const int index) {
-        Node* tmp = head;
+    List<T> operator+(const List<T>& lst1) {
+        Node<T>* tmp = head;
+        Node<T>* tmp1 = lst1.head;
+        List<T> listsum;
+        for(int i = 0; i < size; ++i) {
+            listsum.push_back(tmp -> value);
+            tmp = tmp -> next;
+        }
+        for(int j = 0; j < lst1.get_size(); ++j) {
+            listsum.push_back(tmp1 -> value);
+            tmp1 = tmp1 -> next;
+        }
+        return listsum;
+    }
+    
+    void operator=(const List<T>& lst1) {
+        Node<T>* tmp = head;
+        Node<T>* tmp1 = lst1.head;
+        int big_size = (size > lst1.get_size()) ? size : lst1.get_size();
+        for(int i = 0; i < big_size; ++i) {
+            if(lst1.get_size() > size && i == size) {
+                push_back(tmp1 -> value);
+                tmp1 = tmp1 -> next;
+            }
+            else if(lst1.get_size() < size && i >= lst1.get_size()) {
+                pop_back();
+            }
+            else {
+                tmp -> value = tmp1 -> value;
+                tmp = tmp -> next;
+                tmp1 = tmp1 -> next;
+            }
+        }
+    }
+    
+    const bool operator==(const List<T>& right) {
+        if(size != right.get_size()) {
+            return false;
+        }
+        Node<T>* tmp = head;
+        Node<T>* tmpright = right.head;
+        for(int i = 0; i < right.get_size(); ++i) {
+            if(tmp -> value != tmpright -> value) {
+                return false;
+            }
+            tmp = tmp -> next;
+            tmpright = tmpright -> next;
+        }
+        return true;
+    }
+    
+    const bool operator!=(const List<T>& right) {
+        if(size != right.get_size()) {
+            return true;
+        }
+        Node<T>* tmp = head;
+        Node<T>* tmpright = right.head;
+        for(int i = 0; i < right.get_size(); ++i) {
+            if(tmp -> value != tmpright -> value) {
+                return true;
+            }
+            tmp = tmp -> next;
+            tmpright = tmpright -> next;
+        }
+        return false;
+    }
+    
+    T& operator[](const int index) {
+        if(index > size || index < 0) {
+            std::cout << "list[i]...out of size!\n";
+        }
+        Node<T>* tmp = head;
         for(int i = 0; i <= index; ++i) {
             if(i == index) {
                 return tmp -> value;
@@ -49,59 +132,92 @@ class List {
         }
     }
     
-    void insert_at_index(int value,int index){
+    void insert_at_index(T value,int index){
         if(index == 0) {
-            head  = new Node(value,head);
+            head  = new Node<T>(value,head);
         }
         else {
-            Node* tmp = head;
+            Node<T>* tmp = head;
             for(int i = 0; i < index - 1; ++i) {
                 tmp = tmp -> next;
             }
-            tmp -> next = new Node(value,tmp -> next);
+            tmp -> next = new Node<T>(value,tmp -> next);
         }
         ++size;
     }
     
-    int get_at_index(int index) {
-        Node* tmp = head;
-        for(int i = 0; i < index; ++i){
+    T get_at_index(int index) {
+        if(index > size || index < 0) {
+            std::cout << "get_at_index(int >>> " << index << " <<<)...error.\n";
+            return T();
+        }
+        Node<T>* tmp = head;
+        for(int i = 0; i < index; ++i) {
             tmp = tmp -> next;
         }
         return tmp -> value;
     }
 
-    void set_at_index(int index,int value) {
-        Node* tmp = head;
-        for(int i = 0; i < index; ++i){
+    void set_at_index(T value,int index) {
+        if(index > size || index < 0) {
+            std::cout << "set_at_index(int >>> " << index << " <<<)...error.\n";
+            return;
+        }
+        Node<T>* tmp = head;
+        for(int i = 0; i < index; ++i) {
             tmp = tmp -> next;
         }
         tmp -> value = value;
     }
 
-    void push_back(int value) {       
+   void remove_at_index(int index ) {
+        if(index > size || index < 0) {
+            std::cout << "remove_at_index(int >>> " << index << " <<<)...error.\n";
+            return;
+        }
+	    if (index == 0) {
+		    pop_front();
+	    }
+	    else {
+		    Node<T> *tmp = head;
+		    for (int i = 0; i < index - 1; i++) {
+			    tmp = tmp -> next;
+		    }	
+		    Node<T> *Node_Delete = tmp -> next;
+		    tmp -> next = Node_Delete -> next;
+		    delete Node_Delete;
+		    --size;
+	    }
+
+    }
+
+    void push_back(T value) {       
         if(size == 0) {
-            head = new Node(value);
+            head = new Node<T>(value);
             tail = head;
         } 
         else {
-            Node* tmp  = head;
+            Node<T>* tmp  = head;
             while(tmp -> next != nullptr) {
                 tmp = tmp -> next;
             }
-            tmp -> next = new Node(value);
+            tmp -> next = new Node<T>(value);
             tail = tmp;
         }
         ++size;
     }
     
-    void push_front(int value) {
-        head = new Node(value,head);
+    void push_front(T value) {
+        head = new Node<T>(value,head);
         ++size;
     }
     
     void pop_back() {
-        Node* tmp = head;
+        if(size == 0) {
+            std::cout << "pop_back()...size = " << size << "...list is empty.\n";
+            return;
+        }
+        Node<T>* tmp = head;
         for(int i = 0; i < size - 2; ++i) {
             tmp = tmp -> next;
         }
@@ -111,14 +227,22 @@ class List {
     }
     
     void pop_front() {
-        Node* tmp = head;
+        if(size == 0) {
+            std::cout << "pop_front()...size = " << size << "...list is empty.\n";
+            return;
+        }
+        Node<T>* tmp = head;
         head = head -> next;
         delete tmp;
         --size;
     }
     
-    int list_max() const {
-        Node* tmp = head;
+    T list_max() const {
+        if(size == 0) {
+            std::cout << "list_max()...size = " << size << "...list is empty.\n";
+            return T();
+        }
+        Node<T>* tmp = head;
         int max = head -> value;
         for(int i = 0; i < size; ++i) {
             if(tmp -> value > max) {
@@ -129,8 +253,12 @@ class List {
         return max;
     }
     
-    int list_min() const {
-        Node* tmp = head;
+    T list_min() const {
+        if(size == 0) {
+            std::cout << "list_min()...size = " << size << "...list is empty.\n";
+            return T();
+        }
+        Node<T>* tmp = head;
         int min = head -> value;
         for(int i = 0; i < size; ++i) {
             if(tmp -> value < min) {
@@ -142,7 +270,11 @@ class List {
     }
     
     void reverse() {
-        Node* tmp = head;
+        if(size == 0) {
+            std::cout << "reverse()...size = " << size << "...list is empty.\n";
+            return;
+        }
+        Node<T>* tmp = head;
         int counter = size;
         for(int i = 0; i < counter; ++i) {
             push_front(tmp -> value);
@@ -154,11 +286,15 @@ class List {
     }
     
     void print() const {
-        Node* tmp = head;
+        if(size == 0) {
+            std::cout << "print()...size = " << size << "...list is empty.\n";
+            return;
+        }
+        Node<T>* tmp = head;
         for(int i = 0; i < size; ++i) {
             std::cout << "value " << i << " = " << tmp -> value << std::endl;
             tmp = tmp -> next;
         }
+        std::cout << std::endl;
     }
-    
 };
