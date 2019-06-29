@@ -1,6 +1,7 @@
 #include<iostream>
 #include<utility>
 template <typename T>
+// template <typename List> 
 
 class List
 {
@@ -249,37 +250,36 @@ class List
 		--size;
 	}
 
-	template <typename List> void reverse(List& head)
+	Node* reverse()
 	{
-    	List phead = nullptr;
+		Node* newTail = this -> head;
+    	Node* phead = this -> head;
     	while(head != nullptr){
-        	List p = std::move(head -> next);
-        	head -> next = std::move(phead);
-        	phead = std::move(head);
-        	head = std::move(p);
+        	Node* p = head->next;
+			head-> next = phead;
+			phead = head;
+			head = p;
    		}
-
-    	head = std::move(phead);
+		this -> head = phead;
+		this -> tail = newTail;
 	}
+
 	void clear(void){
 		while(this -> size != 0){
 			pop_back();
 		}
 	}
-
 };
 
 int main(){
 	List <int> list1;
-	List <int> list2;
+	
 	for(int i = 0; i < 10;++i){
 		list1.push_back(i);
 	}
-   		
-	for(int i = 10; i < 20;++i){
-        list2.push_back(i);
-    }
 	list1.print();
-	list2.print();
+	list1.reverse();
+	list1.print();
+	
 	return 0;
 }
