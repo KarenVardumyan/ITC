@@ -18,8 +18,6 @@ int main() {
     char *str = (char *) malloc(100);
     str = strcpy(str, "           aaaaaaaaaaaaaaaaaaaaaaaaaaaaa    %@ ");
 
-	//printf("%d",strlen(str));
-
     char *trailing_token = (char *) malloc(strlen(str));
 	
 
@@ -27,7 +25,7 @@ int main() {
     str = trim(str, "  ,\\#~!@#$%^&*()_\t;\"", START_TRIM, trailing_token);
     printf("\nstr : |%s|\naddres : %p\n", str, str);
 
-    //printf("\n\ntrailing token : |%s|\n", trailing_token);
+	//printf("\n\ntrailing token : |%s|\n", trailing_token);
 
     //free(trailing_token); trailing_token = NULL;
     //free(str); str = NULL;
@@ -46,30 +44,46 @@ int main() {
 char *trim(char *str, char *symbols, TrimMode mode, char *trailing_token) {
 	switch(mode)
 	{
-		case FULL_TRIM:
-			printf("case 1");
+		case FULL_TRIM:		
+		{
 		case START_TRIM:
-			{
-			int counter = 0;
+		{
+			int counter= 0;
 			for(int i = 0; i < strlen(str);++i){
 				int a = search(symbols,str[i]);
 				if(a != 0){
-					counter = counter + 1;
+					++counter; 
 				}else if(a == 0){
-					memcpy(str, str + counter, strlen(str) - counter);
-					printf("\nstr : |%s|\naddres : %p\n", str, str);
-					str[strlen(str) - counter + 1] = '\0';
+					str = memcpy(str, str + counter, strlen(str) - counter);
+					str[strlen(str) - counter ] = '\0';
 					trailing_token = NULL;
-					break;	
+					if(mode != FULL_TRIM){
+						return str;
+					}
 				}
 			}
-			}
-			break;
+		}
 		case END_TRIM:
-			printf("case 3");
-			break;
+		{
+			printf("****************************************************");
+			int counter = 0;
+			for(int i = strlen(str) - 1; i != 0 ; --i){
+				int a = search(symbols,str[i]);
+				if(a != 0){
+					++counter;
+				}else{
+                    str[strlen(str) - counter] = '\0';
+					//printf("\nstr : |%s|\naddres : %p\n", str, str);
+                    return str;
+               		break; 		
+				}
+			}
+		    break;
+		}
+		}
 	}
-}
+}	
+
 bool search(char* zangvac,char simvol){
 	for(int i = 0; i < strlen(zangvac);++i){
 		if(zangvac[i] == simvol){
@@ -78,4 +92,5 @@ bool search(char* zangvac,char simvol){
 	}
 	return false;
 }
+
 
