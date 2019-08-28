@@ -1,7 +1,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
-#include stdbool.h>
+#include <stdbool.h>
 
 typedef enum TrimMode {
     FULL_TRIM,
@@ -21,12 +21,11 @@ int main() {
 	//printf("%d",strlen(str));
 
     char *trailing_token = (char *) malloc(strlen(str));
-
-
+	
 
     printf("str : |%s|\naddres : %p\n", str,str);
-    str = trim(str, " ,\\#~!@#$%^&*()_\t;\"", end_TRIM, trailing_token);
-   // printf("\nstr : |%s|\naddres : %p\n", str, str);
+    str = trim(str, "  ,\\#~!@#$%^&*()_\t;\"", START_TRIM, trailing_token);
+    printf("\nstr : |%s|\naddres : %p\n", str, str);
 
     //printf("\n\ntrailing token : |%s|\n", trailing_token);
 
@@ -38,33 +37,39 @@ int main() {
 
 
 /*
-* Trim the given string with the given symbols2
+* Trim the given string with the given symbols 
 * str - input string
 * symbols - the symbols which should be removed
 * mode - the trim mode, can be FULL_TRIM, END_TRIM, START_TRIM
 * trailing_token - string containing trailing characters which were trimmed
 */
 char *trim(char *str, char *symbols, TrimMode mode, char *trailing_token) {
-	switch(mode) {
+	switch(mode)
+	{
 		case FULL_TRIM:
 			printf("case 1");
-			break;
 		case START_TRIM:
+			{
+			int counter = 0;
 			for(int i = 0; i < strlen(str);++i){
-				if(str[i] != ' ' || str[i] != '#' || str[i] != '~'){
-					str = strcopy();
+				int a = search(symbols,str[i]);
+				if(a != 0){
+					counter = counter + 1;
+				}else if(a == 0){
+					memcpy(str, str + counter, strlen(str) - counter);
+					printf("\nstr : |%s|\naddres : %p\n", str, str);
+					str[strlen(str) - counter + 1] = '\0';
+					trailing_token = NULL;
+					break;	
 				}
 			}
-			printf("case 2");
-
+			}
 			break;
 		case END_TRIM:
 			printf("case 3");
 			break;
-
 	}
 }
-
 bool search(char* zangvac,char simvol){
 	for(int i = 0; i < strlen(zangvac);++i){
 		if(zangvac[i] == simvol){
