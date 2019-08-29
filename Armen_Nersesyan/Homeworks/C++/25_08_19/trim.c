@@ -20,15 +20,14 @@ int main() {
 
     char *trailing_token = (char *) malloc(strlen(str));
 
-
     printf("str : |%s|\naddres : %p\n", str,str);
-    str = trim(str, " %@#", START_TRIM, trailing_token);
+    str = trim(str, " %@#", FULL_TRIM, trailing_token);
     printf("\nstr : |%s|\naddres : %p\n", str, str);
 
-	//printf("\n\ntrailing token : |%s|\n", trailing_token);
+	printf("\n\ntrailing token : |%s|\n", trailing_token);
 
-    //free(trailing_token); trailing_token = NULL;
-    //free(str); str = NULL;
+    free(trailing_token); trailing_token = NULL;
+    free(str); str = NULL;
 
     return 0;
 }
@@ -68,6 +67,7 @@ char *trim(char *str, char *symbols, TrimMode mode, char *trailing_token) {
 				}
 				++counter;
 			}
+			trailing_token = memcpy(trailing_token,str + (strlen(str) - counter),counter);
 		    str[strlen(str) - counter] = '\0';
 		}
 	}
