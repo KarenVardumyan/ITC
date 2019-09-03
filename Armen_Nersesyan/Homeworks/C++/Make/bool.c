@@ -1,6 +1,8 @@
 #include "functions.h"
+#include"stdbool.h"
+#include "string.h"
 
-bool is_equal(char *str1, char* str2) {
+_Bool is_equal(char *str1, char* str2) {
     if(strlen(str1) != strlen(str2)){
         return false;
     }

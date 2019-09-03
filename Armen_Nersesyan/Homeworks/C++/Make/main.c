@@ -14,7 +14,6 @@ int main(int argc, char const *argv[]) {
 	
 	trim(text1, " %@#$^&*()_+[]{}|'?/><", FULL_TRIM, NULL);
  	trim(text2, " %@#$^&*()_+[]{}|'?/><", FULL_TRIM, NULL);
-	printf("%p",text1);
     if(is_equal(text1,text2)) {
         printf("EQUAL\n");
     } else {

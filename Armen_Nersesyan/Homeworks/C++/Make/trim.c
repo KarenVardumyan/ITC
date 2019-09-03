@@ -1,11 +1,6 @@
 #include "functions.h"
-typedef enum TrimMode {
-    FULL_TRIM,
-    START_TRIM,
-    END_TRIM
-} TrimMode;
-
-
+#include"string.h"
+#include"stdbool.h"
 char *trim(char *str, char *symbols, TrimMode mode, char *trailing_token) {
 
 	if(str == NULL || symbols == NULL || str == "" || symbols == "") {

@@ -4,5 +4,5 @@ typedef enum TrimMode {
     END_TRIM
 } TrimMode;
 
-bool is_equal(char *str1, char* str2);
+_Bool is_equal(char *str1, char* str2);
 char *trim(char *str, char *symbols, TrimMode mode, char *trailing_token);
