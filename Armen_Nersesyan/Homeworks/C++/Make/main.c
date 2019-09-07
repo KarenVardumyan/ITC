@@ -7,10 +7,10 @@
 int main(int argc, char const *argv[]) {
 
     char* text1 =  (char*)malloc(SIZE);
-    text1 = strcpy(text1,"armen");
+    text1 = strcpy(text1,"armeno");
 
     char* text2 =  (char*)malloc(SIZE);
-    text2 = strcpy(text2,"Armen");
+    text2 = strcpy(text2,"Armenn");
 	
 	trim(text1, " %@#$^&*()_+[]{}|'?/><", FULL_TRIM, NULL);
  	trim(text2, " %@#$^&*()_+[]{}|'?/><", FULL_TRIM, NULL);

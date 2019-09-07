@@ -2,7 +2,7 @@
 #include"stdbool.h"
 #include "string.h"
 
-_Bool is_equal(char *str1, char* str2) {
+bool is_equal(char *str1, char* str2) {
     if(strlen(str1) != strlen(str2)){
         return false;
     }
