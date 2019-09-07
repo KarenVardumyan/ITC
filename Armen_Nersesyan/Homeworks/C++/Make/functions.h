@@ -1,4 +1,6 @@
+#include<string.h>
 #include<stdbool.h>
+#include<stdlib.h>
 
 typedef enum TrimMode {
     FULL_TRIM,

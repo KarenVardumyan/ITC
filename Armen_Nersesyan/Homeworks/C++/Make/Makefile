@@ -1,16 +1,13 @@
 all: project
 
-project: main.o trim.o bool.o
-	gcc main.c trim.c bool.c -o trim.out
+project: main.o functions.c
+	gcc main.c functions.c -o a.out
 
 main.o: main.c
 	gcc -c main.c
 
-trim.o: trim.c
-	gcc -c trim.c
-
-bool.o:
-	gcc -c bool.c
+functions.o: functions.c
+	gcc -c functions.c
 
 clean:
 	rm -rf *.o project
