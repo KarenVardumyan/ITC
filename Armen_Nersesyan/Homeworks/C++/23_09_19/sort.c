@@ -8,8 +8,8 @@ void sort_string(char** string,int value);
 
 int main(){
     char** mystring = (char**)malloc(5);
-    char *str0 = "armen";
-    char *str1 = "valod";
+    char *str0 = "ARME   ";
+    char *str1 = "AeMa  ";
     char *str2 = "karen";
     char *str3 = "peto";
     char *str4 = "beno";
@@ -19,10 +19,21 @@ int main(){
     mystring[3] = strdup(str3);
     mystring[4] = strdup(str4);
     mystring[0] = strdup(str0);
+    for(int i = 0; i < 5; ++i){
+        printf("%s\n",mystring[i]);
+    }
+    printf("=============\n");
     sort_string(mystring,5);
     for(int i = 0; i < 5; ++i){
         printf("%s\n",mystring[i]);
     }
+
+
+    for(int i = 0; i < 5; ++i){
+        free(mystring[i]);
+    }
+    free(mystring);
+
     return 0;
 }
 
