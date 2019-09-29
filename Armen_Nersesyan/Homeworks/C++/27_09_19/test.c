@@ -4,16 +4,13 @@
 #include <unistd.h>
 #include <stdbool.h>
 
-#define LINES_LOUNT 10
-#define LINE_LENGTH 100
-
-typedef enum element_type {
-    H1,
-    TITLE,
-    BUTTON,
-    TEXT,
-    UNKNOWN
-} element_type;
+/*
+button
+div
+h1
+p
+title
+*/
 
 typedef enum trim_mode {
     FULL_TRIM,
@@ -21,97 +18,68 @@ typedef enum trim_mode {
     END_TRIM
 } trim_mode;
 
-typedef struct web_element {
-    element_type type;
-    char * value;
-} web_element;
-
-void  tags(char* tag, web_element *element);
+bool html_validator(char *element);
 bool str_case_compare(char *str1, char* str2);
 char *trim(char *str, char *symbols, trim_mode mode, char *trailing_token);
 
-int main(int argc, char const *argv[]){
 
-    web_element elements[LINES_LOUNT];
+int main(int argc, char const *argv[]) {
 
-    char *buf = (char *) malloc(LINE_LENGTH);
-    FILE *fp;
+    char *element = "<div>  sdcdfds </div>";
 
-    int rw = access("./index.html", R_OK);
-    if (rw != 0) {
-        printf("\n*** ERROR: Permission denied ***\n");
-        return 0;
+    if(html_validator(element)) {
+        printf("valid html\n");
+    } else {
+        printf("invalid html\n");
     }
-
-    fp = fopen("./index.html", "r+");
-    if (fp == NULL) {
-        printf("\n*** ERROR: Could not open file for reding ***\n");
-        return 0;
-    }
-
-    int i = 0;
-    while(!feof(fp)) {
-        fgets (buf, LINE_LENGTH, fp);
-        tags(buf, &elements[i]);
-        ++i;
-    }
-
-    for (int i = 0; i < LINES_LOUNT; ++i) {
-        printf("===================\n");
-        printf("type : %d\ndata : %s\n", elements[i].type, elements[i].value);
-    }
-
-    for (int i = 0; i < LINES_LOUNT; ++i) {
-        free(elements[i].value);
-    }
-    fclose(fp);
-    free(buf);
 
     return 0;
 }
 
-void  tags(char* tag, web_element *element){
 
-    char *element_type = (char *) malloc(10);
 
-    tag = trim(tag, " ", FULL_TRIM, NULL);
+
+bool html_validator(char *element) {
     int index = 0;
+    char* element_type = (char*)malloc(10);
+    element = trim(element," ",FULL_TRIM,NULL);
+    if (element[0] != '<') {
+        return false;
+    }
+
+
+    element = trim(element, " ", FULL_TRIM, NULL);
     bool a = false;
-    for(int i = 0; i < strlen(tag); ++i){
-       if('>' == tag[i]) {
+    for(int i = 0; i < strlen(element); ++i){
+       if('>' == element[i]) {
             index = i - 1;
             break;
        }
     }
-    strncpy(element_type, tag + 1 ,index);
+    strncpy(element_type, element + 1 ,index);
     element_type = trim(element_type, " ", FULL_TRIM, NULL);
 
-    if(str_case_compare(element_type, "button")) {
-        element -> type = BUTTON;
-    } else if(str_case_compare(element_type, "h1")) {
-        element -> type = H1;
-    } else if(str_case_compare(element_type, "p")) {
-        element -> type = TEXT;
-    } else if(str_case_compare(element_type, "title")) {
-        element -> type = TITLE;
-    } else {
-        element -> type = UNKNOWN;
-    }
 
-    int data_length = index;
-    for(int i = index + 1; i < strlen(tag);++i){
-        if(tag[i] == '<'){
-            index = i - 1;
-            break;
-        }
-    }
+    printf(" element type : %s\n",element_type);
+    // printf("%s\n", element);
 
-    element -> value  = (char*)malloc(index - data_length);
-    strncpy(element -> value, tag + data_length + 2, index - data_length - 1);
-    element -> value = trim(element -> value, " ", FULL_TRIM, NULL);
-
-    free(element_type);
+    return true;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 char *trim(char *str, char *symbols, trim_mode mode, char *trailing_token) {
@@ -163,7 +131,6 @@ char *trim(char *str, char *symbols, trim_mode mode, char *trailing_token) {
 
     return str;
 }
-
 
 bool str_case_compare(char *str1, char* str2) {
 
