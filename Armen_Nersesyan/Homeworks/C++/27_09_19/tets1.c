@@ -31,7 +31,7 @@ char *trim(char *str, char *symbols, trim_mode mode, char *trailing_token);
 
 int main(){
 
-    char *element = "<TITLE<><>>  sdcdfds </title<><>>";
+    char *element = "<TITLE<button>>  sdcdfds </title<button>>";
 
     if(html_validator(element)) {
         printf("valid html\n");
@@ -70,12 +70,17 @@ bool html_validator(char *element) {
             return false;
         }
     }
-    //
-    //printf(" element type : %s\n",element_type);
-    //printf(" element type : %s\n",element_type1);
+    printf("test -------------------%d\n",array_at_index[index/2]);
+    int bayt_size = array_at_index[index-1] - array_at_index[index/2];
+    strncpy(element_type,element ,array_at_index[index/2 - 1] + 1);
+    strncpy(element_type1,element + array_at_index[index/2],bayt_size);
+    //for(int i = 0; i < strlen(element_type1))
+    printf(" element type : %s\n",element_type);
+    printf(" element type : %s\n",element_type1);
     //if(element_type1[0] == '/'){
-    //    element = trim(element_type1,"/",FULL_TRIM,NULL);
+    //   element = trim(element_type1,"/",FULL_TRIM,NULL);
     //}
+    
     //if(strlen(element_type) != strlen(element_type1)){
     //    return false;
     //}
