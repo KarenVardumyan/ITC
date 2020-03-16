@@ -1,20 +1,24 @@
 #include<iostream>
 
-class Myvector
+class MyVector
 {
     int size = 0;
     int* arr;
-    int rezerv_size = 0;
+    int reserve_size = 0;
 
     public:
-    Myvector(void){}
-    Myvector(int constructor_size){
+    MyVector(void){}
+    MyVector(int constructor_size){
         arr = new int[constructor_size];
         size = constructor_size;
         for(int i = 0; i < size; ++i){
             arr[i] = 0;
         }
     }
+
+    /*
+     * Set the value the received value in the received index
+     */
     void set_at_index(int index,int value){
         if(index >= this->size || index < 0){
             std::cout<<"no such index"<<std::endl;
@@ -28,6 +32,7 @@ class Myvector
             }
         }
     }
+
     int get_at_index(int index){
         if(index >= this->size || index < 0){
             std::cout<<"no such index"<<std::endl;
@@ -39,27 +44,27 @@ class Myvector
         }
     }
     void push_back(int new_element){
-        if(rezerv_size == 0){
-            rezerv_size = 5;
-            int* bufer = new int[size + rezerv_size];
+        if(reserve_size == 0){
+            reserve_size = 5;
+            int* buffer = new int[size + reserve_size];
             for(int i = 0; i < size; ++i){
-                bufer[i] = arr[i];
+                buffer[i] = arr[i];
             }
-            bufer[size] = new_element;
+            buffer[size] = new_element;
             delete [] arr;
-            arr = bufer;
-            bufer = NULL;
+            arr = buffer;
+            buffer = NULL;
             ++size;
-            --rezerv_size;
+            --reserve_size;
         }else{
         arr[size] = new_element;
         ++size;
-        --rezerv_size;
+        --reserve_size;
         }
     }
     void pop_back(){
         if(size == 0){
-            std::cout<<"vector empty"<<std::endl;
+            std::cout<<"The vector is empty"<<std::endl;
             return;
         }else{
         arr[size - 1] = 0;
@@ -67,30 +72,30 @@ class Myvector
         }
     }
     void push_front(int new_element){
-        if(rezerv_size == 0){
-            rezerv_size = 5;
-            int* bufer = new int[rezerv_size];
-            bufer[0] = new_element;
+        if(reserve_size == 0){
+            reserve_size = 5;
+            int* buffer = new int[reserve_size];
+            buffer[0] = new_element;
             for(int i = 0; i < size; ++i){
-                bufer[i + 1] = arr[i];
+                buffer[i + 1] = arr[i];
             }
             delete [] arr;
-            arr = bufer;
-            bufer = NULL;
+            arr = buffer;
+            buffer = NULL;
             ++size;
-            --rezerv_size;
+            --reserve_size;
         }else{
             ++size;
         for(int j = size - 1;j != 0;--j){
             arr[j] = arr[j-1];
         }
         arr[0] = new_element;
-        --rezerv_size;
+        --reserve_size;
         }
     }
     void pop_front(){
         if(size == 0){
-            std::cout<<"vector empty"<<std::endl;
+            std::cout<<"The vector is empty"<<std::endl;
             return;
         }
         for(int i = 0; i < size; ++i){
@@ -100,46 +105,46 @@ class Myvector
     }
     void insert_at_index(int index1,int index2,int newelement){
         if(size == 0){
-            std::cout<<"vecor empty"<<std::endl;
+            std::cout<<"The vector is empty"<<std::endl;
             return;
         }
         if(index1 < 0 || index2 < 0 || index1 >= size || index2 >= size){
-            std::cout<<"no such index"<<std::endl;
+            std::cout<<"No such index"<<std::endl;
             return;
         }
         if((index2 - index1) != 1 ){
-            std::cout<<"EROR at index"<<std::endl;
+            std::cout<<"ERROR at index"<<std::endl;
             return;
         }
-        int* bufer = new int [size + 1];
+        int* buffer = new int [size + 1];
         for(int i = 0; i <= index1;++i){
-            bufer[i] = arr[i];
+            buffer[i] = arr[i];
         }
-        bufer[index1 + 1] = newelement;
+        buffer[index1 + 1] = newelement;
         for(int i = index1 +2;i < size;++i){
-            bufer[i] = arr[i - 1];
+            buffer[i] = arr[i - 1];
         }
         delete [] arr;
-        arr = bufer;
-        bufer = NULL;
+        arr = buffer;
+        buffer = NULL;
         ++size;
     }
     void revers(void){
         if(size == 0){
-            std::cout<<"vector empty"<<std::endl;
+            std::cout<<"The vector is empty"<<std::endl;
             return;
         }
-        int* bufer = new int[size];
+        int* buffer = new int[size];
         for(int i = 0,j = size - 1; i < size, j != 0; ++i,--j){
-            bufer[i] = arr[j];
+            buffer[i] = arr[j];
         }
         delete []arr;
-        arr = bufer;
-        bufer = NULL;
+        arr = buffer;
+        buffer = NULL;
     }
     void print(){
         if(size == 0){
-            std::cout<<"Vector empty"<<std::endl;
+            std::cout<<"The vector is empty"<<std::endl;
         }
         for (int i = 0; i < size; ++i){
             std::cout<<arr[i];
@@ -149,7 +154,7 @@ class Myvector
     int get_size(void){
         return this->size;
     }
-    ~Myvector(void){
+    ~MyVector(void){
         delete []arr;
     }
 };
