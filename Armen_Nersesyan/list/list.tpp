@@ -1,5 +1,6 @@
 #include"list.hpp"
 #include<iostream>
+
 template<typename T>
 List<T>::List(){
     this -> size = 0;
@@ -7,6 +8,7 @@ List<T>::List(){
     this -> tail = nullptr;
 
 }
+
 template<typename T>
 List<T>::List(int count){
     if(count == 0){
@@ -19,6 +21,7 @@ List<T>::List(int count){
         --count;
     }
 }
+
 template<typename T>
 void List<T>::push_back(T value){
     if(size == 0){
@@ -40,6 +43,7 @@ void List<T>::push_back(T value){
     }
     ++this->size;
 }
+
 template<typename T>
 void List<T>::print(void){
     if(this -> size == 0){
@@ -57,6 +61,7 @@ template<typename T>
 int List<T>::get_size(void){
     return this->size;
 }
+
 template<typename T>
 void List<T>::pop_back(void){
     if(this->size == 0){
@@ -72,6 +77,7 @@ void List<T>::pop_back(void){
     this ->tail = temp;
     --this->size;
 }
+
 template<typename T>
 void  List<T>::push_front(T value){
     if(this->size == 0){
@@ -88,10 +94,11 @@ void  List<T>::push_front(T value){
     }
     ++this->size;
 }
+
 template<typename T>
 void List<T>::pop_front(void){
     if(this->size == 0){
-        std::cout<<"the list is empty"<<std::endl;
+        std::cout<<"The list is empty"<<std::endl;
         return;
     }else{
         Node* temp = this->head;
@@ -100,15 +107,17 @@ void List<T>::pop_front(void){
         --this->size;
     }
 }
+
 template<typename T>
 void List<T>::clear(void){
     if(this->size == 0){
-        std::cout<<"the list is empty"<<std::endl;
+        std::cout<<"The list is empty"<<std::endl;
         return;
     }else{
         pop_front();
     }
 }
+
 template<typename T>
 T List<T>::operator[](unsigned int index){
     int a = 0;
@@ -123,6 +132,7 @@ T List<T>::operator[](unsigned int index){
     std::cout<<temp->value<<std::endl;
     return temp->value;
 }
+
 template<typename T>
 void List<T>::insert_at_index(unsigned int index,T value){
     if(index >= size){

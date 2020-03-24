@@ -1,5 +1,6 @@
 #ifndef _LIST_H_
 #define _LIST_H_
+
 template<typename T>
 
 class List{
@@ -10,7 +11,7 @@ class List{
     };
     Node* head;
     Node* tail;
-    int size = 0;
+    unsigned int size = 0;
     public:
     List();
     int get_size(void);
@@ -25,5 +26,6 @@ class List{
     List(int count);
     ~List();
 };
+
 #include"list.tpp"
 #endif

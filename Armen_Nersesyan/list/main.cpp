@@ -1,3 +1,6 @@
+#ifndef _IOSTREAM_
+#define _IOSTREAM_
+
 #include"list.hpp"
 
 int main(){
@@ -13,3 +16,5 @@ int main(){
 
     return 0;
 }
+
+#endif
