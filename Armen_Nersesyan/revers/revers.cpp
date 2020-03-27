@@ -1,45 +1,32 @@
 #include <iostream>
 
-void revers(int* array);/*reversed using a single variable of int type*/
-void revers1(int* array);/*reversed using one temporary array*/
-void print(int* array);
-const int SIZE = 5;
+void revers(int* array,int size);/*reversed using a single variable of int type*/
+void print(int* array,int size);
 int main() {
-  std::cout<<"array size = "<<SIZE<<" item type int. Input numbers and click enter"<<std::endl;
-  int array[SIZE];
-  for(int i = 0; i < SIZE; ++i){
+  int size;
+  std::cin>>size;
+  std::cout<<"array size = "<<size<<" item type int. Input numbers and click enter"<<std::endl;
+  int *array = new int[size];
+  for(int i = 0; i < size; ++i){
     std::cin>>array[i];
   }
-  print(array);
-  revers(array);
-  print(array);
-  revers1(array);
-  print(array);
+  print(array,size);
+  revers(array,size);
+  print(array,size);
   return 0;
 }
 
-void revers(int* array){
+void revers(int* array,int size){
   int temp = 0;
-  for(int i = 0, j = SIZE - 1; i < j; ++i,--j){
-    temp = array[i];
-    array[i] = array[j];
-    array[j] = temp;
+  for(int i = 0, j = size - 1; i < j; ++i,--j){
+    array[i] = array[i] + array[j];
+    array[j] = array[i] - array[j];
+    array[i] -= array[j];
   }
 }
-void revers1(int* array){
-  int *temp = new int[SIZE];
-  for (int i = 0; i < SIZE; ++i){
-    temp[i] = array[i];
-  }
-  for (int i = 0; i < SIZE; ++i){
-    array[i] = temp[SIZE - 1 - i];
-  }
-  delete [] temp;
-
-}
-void print(int* array){
+void print(int* array,int size){
   std::cout<<"\n";
-  for(int i = 0; i < SIZE; ++i){
+  for(int i = 0; i < size; ++i){
     std::cout<<array[i]<<" ";
   }
 }
