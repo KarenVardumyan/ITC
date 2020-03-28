@@ -1,4 +1,5 @@
 #include <iostream>
+#include <iostream>
 #include <stdio.h>
 #include <cstring>
 
@@ -6,12 +7,12 @@ void reverse(void* arr, int size,int memsize) {
     int Begin_p = 0;
     int End_p = (size * memsize) - memsize;
     void* temp = (void*) std::malloc(memsize);
-    for(int i = 0; i < 5; ++i) {
+    for(int i = 0; i < size/2; ++i) {
         memmove(temp, arr + Begin_p, memsize);
         memmove(arr + Begin_p, arr + End_p, memsize);    
         memmove(arr + End_p, temp, memsize);
-        Begin_p = Begin_p + 4;
-        End_p = End_p - 4;
+        Begin_p = Begin_p + memsize;
+        End_p = End_p - memsize;
     }
     free(temp);
 }
