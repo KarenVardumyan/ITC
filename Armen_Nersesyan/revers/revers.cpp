@@ -1,33 +1,31 @@
 #include <iostream>
+#include <cstdlib>
+#include<cstring>
 
-void revers(int* array,int size);/*reversed using a single variable of int type*/
-void print(int* array,int size);
+void revers(void* array,int size,int byte);/*reversed using a single variable of int type*/
 int main() {
-  int size;
+  int size = 0;
+  std::cout<<"Input size array"<<std::endl;
   std::cin>>size;
   std::cout<<"array size = "<<size<<" item type int. Input numbers and click enter"<<std::endl;
-  int *array = new int[size];
-  for(int i = 0; i < size; ++i){
-    std::cin>>array[i];
+  int* arr = new int[size];
+  for (int i = 0; i < size; i++){
+    std::cin>>arr[i];
   }
-  print(array,size);
-  revers(array,size);
-  print(array,size);
+  revers(arr,size,sizeof(arr[0]));
+  for (int i = 0; i < size; i++)
+  {
+    std::cout<<arr[i];
+  }
   return 0;
 }
 
-void revers(int* array,int size){
-  int temp = 0;
-  for(int i = 0, j = size - 1; i < j; ++i,--j){
-    array[i] = array[i] + array[j];
-    array[j] = array[i] - array[j];
-    array[i] -= array[j];
+void revers(void* array,int size,int byte){
+  void* temp = (void*)malloc(4);
+  for(int i = 0; i < size/2; i++){
+      memmove(temp,array + (size - i -1) * byte,byte);
+      memmove(array + (size -1 - i) * byte,array + i * byte,byte);
+      memmove(array + i * byte,temp,byte);
   }
+  free(temp);
 }
-void print(int* array,int size){
-  std::cout<<"\n";
-  for(int i = 0; i < size; ++i){
-    std::cout<<array[i]<<" ";
-  }
-}
-
