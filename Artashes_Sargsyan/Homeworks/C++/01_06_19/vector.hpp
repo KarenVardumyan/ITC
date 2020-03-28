@@ -138,7 +138,7 @@ class Vector{
             delete [] array;
             array = newarray;
             newarray = NULL;
-        }else {
+        } else {
                 array[size - 1] = value;
             }
     }
