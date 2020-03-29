@@ -1,6 +1,7 @@
 #include<iostream>
 #include<string.h>
-#include <stdlib.h>
+#include<stdlib.h>
+#include<stdio.h>
 
 void trim(char* str1);
 char** split(char* inputString,char token,int* count);
