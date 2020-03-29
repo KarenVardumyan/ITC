@@ -4,7 +4,7 @@
 
 void trim(char* str1);
 char** split(char* inputString,char token,int* count);
-
+void del(char** str,int length);
 int main(){
     char token = ' ';
     int count = 0;
@@ -16,7 +16,10 @@ int main(){
     for (int i = 0; i <=count ; i++) {
         printf("arr[%d] = %s\n", i, output[i]);
     }
-    free(output);
+    del(output,count);
+    for (int i = 0; i <=count ; i++) {
+        printf("arr[%d] = %s\n", i, output[i]);
+    }
     return 0;
 }
 
@@ -45,13 +48,11 @@ char** split(char* inputString,char token,int* count){
         if(inputString[i] == token || inputString[i+1] == '\0') {
             end = i;
             outputString[index] = (char*) malloc(end- start + 1);
-            outputString[index][end - start] = '\0';
             memmove(outputString[index], inputString + start + 1, end - start);
             start = end;
             ++index;
         }
     }
-
     return  outputString;
 }
 void trim(char* str1){
@@ -72,4 +73,11 @@ void trim(char* str1){
         str1[temp + 1] = '\0';
     }
     return;
+}
+void del(char** str,int length){
+    for(int i = length; i != 0; --i){
+        free(str[i]);
+        str[i] = NULL;
+    }
+    free(str);
 }
