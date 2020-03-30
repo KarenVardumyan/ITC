@@ -7,15 +7,16 @@ void trim(char* str1);
 char** split(char* inputString,char token,int* count);
 void del(char** str,int length);
 int main(){
-    char token = ' ';
+    char token = ',';
     int count = 0;
-    char inputString[] ="gggg kjjnjnh fgf djkfndj djfn mdf md msdms smdms kdmsdf";
+    char inputString[100] ="gggg,kjjnjnh,fgf,djk fndj,djfn,mdf, fg,f,g dl,ld ,,,,,,md,msdms,smdms,kdmsdf";
     if(inputString[0] == ' ' || inputString[strlen(inputString)-1] == 0){
         trim(inputString);
     }
+    std::cout<<"string-------------"<<inputString<<std::endl;
     char** output = split(inputString,token,&count);
     for (int i = 0; i <=count ; i++) {
-        printf("arr[%d] = %s\n", i, output[i]);
+        printf("arr[%d] = |%s|\n", i, output[i]);
     }
     del(output,count);
     for (int i = 0; i <=count ; i++) {
@@ -49,8 +50,8 @@ char** split(char* inputString,char token,int* count){
         if(inputString[i] == token || inputString[i+1] == '\0') {
             end = i;
             outputString[index] = (char*) malloc(end- start + 1);
-            memmove(outputString[index], inputString + start + 1, end - start);
-            start = end;
+            memmove(outputString[index], inputString + start , end - start);
+            start = end + 1;
             ++index;
         }
     }
