@@ -133,7 +133,6 @@ void List<T>::clear(void){
 
 template<typename T>
 T List<T>::operator[](unsigned int index){
-    int a = 0;
     if(index < 0 || index >= size){
         std::cout<<"size list-->"<<size<<"  No souch list["<<index<<"] indexing from scratch and unsigned int"<<std::endl;
         return 0;
