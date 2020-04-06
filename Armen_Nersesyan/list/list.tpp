@@ -2,6 +2,19 @@
 #include<iostream>
 
 template<typename T>
+
+List<T>::List(List<T> & list){
+    Node* tempNode = list.head;
+    this -> size = 0;
+    this -> head = nullptr;
+    this -> tail = nullptr;
+    for(int i = 0; i < list.get_size();++i){
+        push_back(tempNode -> value);
+        tempNode = tempNode -> next;
+    }
+}
+
+template<typename T>
 List<T>::List(){
     this -> size = 0;
     this -> head = nullptr;

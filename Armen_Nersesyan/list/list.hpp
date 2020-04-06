@@ -14,6 +14,7 @@ class List{
     unsigned int size = 0;
     public:
     List();
+    List(List &);
     int get_size(void);
     void push_back(T value);
     void pop_back(void);
